@@ -1,5 +1,6 @@
 html, body {
-    height: 100%; /* Ensure the body and html fill the viewport */
+    height: 100%;
+    background-color: white;
 }
 .thumbs-up-big {
     max-width: 100%;
@@ -20,12 +21,12 @@ html, body {
 }
 
 .dot {
-    display: inline-block; /* Behave like inline text */
+    display: inline-block;
     width: 0.8rem;
     height: 0.8rem;
     background-color: black;
     border-radius: 50%;
-    vertical-align: middle; /* Align with text */
+    vertical-align: middle;
     animation-iteration-count: 1; 
     animation-duration: 0.8s;
 }
