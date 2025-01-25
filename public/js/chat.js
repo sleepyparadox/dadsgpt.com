@@ -20,6 +20,8 @@ class MessageFactory {
         
         this.messagesBody.appendChild(div);
         div.appendChild(innerText);
+        
+        this.scrollToBottom();
     }
 
     appendInputMessage(text) {
@@ -31,15 +33,17 @@ class MessageFactory {
         
         this.messagesBody.appendChild(inputDiv);
         inputDiv.appendChild(inputInnerText);
+        
+        this.scrollToBottom();
     }
 
-    appendResponseMessage(text, isTyping, divsToReplace) {
+    appendResponseMessage(text, isTyping, typingDuration, divsToReplace) {
         if(isTyping)
         {
             const typingDivs = this.appendTyping();
             setTimeout(() => {
-                this.appendResponseMessage(text, false, typingDivs);
-            }, 3000);
+                this.appendResponseMessage(text, false, 0, typingDivs);
+            }, typingDuration);
             return;
         }
 
@@ -71,11 +75,21 @@ class MessageFactory {
         
         inputDiv.appendChild(dadImg);
         inputDiv.appendChild(inputInnerText);
+        
+        this.scrollToBottom();
     }
 
-    appendThumbSmall() {
+    appendThumbSmall(isTyping, typingDuration, divsToReplace) {
+        if(isTyping)
+        {
+            const typingDivs = this.appendTyping();
+            setTimeout(() => {
+                this.appendThumbSmall(false, 0, typingDivs);
+            }, typingDuration);
+            return;
+        }
+
         const dadName = this.newDadName();
-        this.messagesBody.appendChild(dadName);
 
         const inputDiv = document.createElement("div");
         inputDiv.classList.add("d-flex", "flex-row", "justify-content-start")
@@ -83,21 +97,46 @@ class MessageFactory {
         const dadImg = this.newDadImage();
 
         const inputInnerText = document.createElement("p");
-        inputInnerText.classList.add("small", "p-2", "pt-0", "ms-3", "me-3", "mb-1", "rounded-3")
+        inputInnerText.classList.add("small", "p-2", "pt-0", "ms-3", "me-3", "mb-1", "rounded-3", "animate__animated", "animate__bounceIn")
         
         const thumbImg = document.createElement("img");
         thumbImg.src = "assets/thumbs-up.png";
         thumbImg.classList.add("thumbs-up-small");
 
-        this.messagesBody.appendChild(inputDiv);
+
+        if(divsToReplace != null)
+        {
+            var nextSibling = divsToReplace.at(-1);
+            this.messagesBody.insertBefore(dadName, nextSibling);
+            this.messagesBody.insertBefore(inputDiv, nextSibling);
+            for(let i = 0; i < divsToReplace.length; i++) {
+                this.messagesBody.removeChild(divsToReplace[i]);
+            }
+        }
+        else
+        {
+            this.messagesBody.appendChild(dadName);
+            this.messagesBody.appendChild(inputDiv);
+        }
+
         inputDiv.appendChild(dadImg);
         inputDiv.appendChild(inputInnerText);
         inputInnerText.appendChild(thumbImg);
+        
+        this.scrollToBottom();
     }
 
-    appendThumbLarge() {
+    appendThumbLarge(isTyping, typingDuration, divsToReplace)  {
+        if(isTyping)
+        {
+            const typingDivs = this.appendTyping();
+            setTimeout(() => {
+                this.appendThumbLarge(false, 0, typingDivs);
+            }, typingDuration);
+            return;
+        }
+
         const dadName = this.newDadName();
-        this.messagesBody.appendChild(dadName);
 
         const inputDiv = document.createElement("div");
         inputDiv.classList.add("d-flex", "flex-row", "justify-content-start")
@@ -105,16 +144,32 @@ class MessageFactory {
         const dadImg = this.newDadImage();
 
         const inputInnerText = document.createElement("p");
-        inputInnerText.classList.add("small", "p-2", "pt-0", "ms-3", "me-3", "mb-1", "rounded-3")
+        inputInnerText.classList.add("small", "p-2", "pt-0", "ms-3", "me-3", "mb-1", "rounded-3", "animate__animated", "animate__jackInTheBox")
         
         const thumbImg = document.createElement("img");
         thumbImg.src = "assets/thumbs-up.png";
         thumbImg.classList.add("thumbs-up-big");
+        
+        if(divsToReplace != null)
+        {
+            var nextSibling = divsToReplace.at(-1);
+            this.messagesBody.insertBefore(dadName, nextSibling);
+            this.messagesBody.insertBefore(inputDiv, nextSibling);
+            for(let i = 0; i < divsToReplace.length; i++) {
+                this.messagesBody.removeChild(divsToReplace[i]);
+            }
+        }
+        else
+        {
+            this.messagesBody.appendChild(dadName);
+            this.messagesBody.appendChild(inputDiv);
+        }
 
-        this.messagesBody.appendChild(inputDiv);
         inputDiv.appendChild(dadImg);
         inputDiv.appendChild(inputInnerText);
         inputInnerText.appendChild(thumbImg);
+        
+        this.scrollToBottom();
     }
 
     appendTyping() {
@@ -149,6 +204,8 @@ class MessageFactory {
         dotsDiv.appendChild(dot1);
         dotsDiv.appendChild(dot2);
         dotsDiv.appendChild(dot3);
+        
+        this.scrollToBottom();
 
         return [dadName, typingDiv];
     }
@@ -169,6 +226,10 @@ class MessageFactory {
         inputInnerImg.style = "width: 45px; height: 100%;";
         return inputInnerImg;
     }
+
+    scrollToBottom() {
+        this.messagesBody.scrollTop = this.messagesBody.scrollHeight;
+    }
 }
 
 
@@ -187,9 +248,22 @@ document.addEventListener("DOMContentLoaded", function() {
         if (message) {
             messageFactory.appendInputMessage(message);
             userInput.value = '';
+
+            var delay = 2500; // play animation once
+
             setTimeout(() => {
-                messageFactory.appendResponseMessage("OK", true);
-            }, 500);
+                var randResponsePrecent = Math.floor(Math.random() * 100);
+                if (randResponsePrecent < 5) {
+                    messageFactory.appendThumbLarge(true, delay);
+                } else if (randResponsePrecent < 10) {
+                    messageFactory.appendResponseMessage("?", true, delay);
+                } 
+                else if (randResponsePrecent < 15) {
+                    messageFactory.appendResponseMessage("OK", true, delay);
+                } else {
+                    messageFactory.appendThumbSmall(true, delay);
+                }
+            }, 1000);
         }
     }
 
