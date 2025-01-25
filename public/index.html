@@ -5,130 +5,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dad's GPT</title>
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="animate.css/animate.min.css" rel="stylesheet">
-    <link href="css/chat.css" rel="stylesheet">
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <link href="bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="animate.css/animate.min.css" rel="stylesheet">
+
+    <link href="css/chat.css" rel="stylesheet">
     <script src="js/chat.js"></script>
 </head>
 <body>
     <section>
         <div class="container py-5">
       
-          <div class="row d-flex justify-content-center">
+            <div class="row d-flex justify-content-center">
             <div class="col-md-8 col-lg-6 col-xl-6">
-              <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center p-3">
-                  <h5 class="mb-0">Dad's GPT</h5>
-                </div>
-                <div id="messages-body" class="card-body overflow-auto" style="position: relative; height: 400px">
-                    <!-- Timestamp -->
-                    <div class="text-center">
-                        <p class="small mb-1 text-muted">23 Jan 2:05 pm</p>
-                    </div>
-                    
-
-                    <!-- You -->
-                    <div class="text-end">
-                        <p class="small mb-1">You</p>
-                    </div>
-                    <div class="d-flex flex-row justify-content-end mb-4 pt-1">
-                        <p class="small p-2 me-3 mb-3 rounded-3 bg-body-tertiary">Can I borrrow the car this weekend?</p>
-                    </div>
-
-                    <!-- Dad Typing -->
-                    <div class="">
-                        <p class="small mb-1">Dad</p>
-                    </div>
-                    <div class="d-flex flex-row justify-content-start">
-                        <img src="./assets/dadsgpt-icon.webp"
-                            alt="avatar 1" style="width: 45px; height: 100%;">
-                        <p class="small p-2 ms-3 mb-3 rounded-3 bg-body-tertiary"> 
-                            <span class="dots">
-                                <span class="dot dot-1 animate__animated animate__bounce"></span>
-                                <span class="dot dot-2 animate__animated animate__bounce"></span>
-                                <span class="dot dot-3 animate__animated animate__bounce"></span>
-                            </span>
-                        </p>
-                    </div>
-
-                    <!-- You -->
-                    <div class="text-end">
-                        <p class="small mb-1">You</p>
-                    </div>
-                    <div class="d-flex flex-row justify-content-end mb-4 pt-1">
-                        <div>
-                            <p class="small p-2 me-3 mb-3 rounded-3 bg-body-tertiary">Can I borrrow the car this weekend?</p>
-                        </div>
-                    </div>
-
-                    <!-- Dad OK -->
-                    <div class="">
-                        <p class="small mb-1">Dad</p>
-                    </div>
-                    <div class="d-flex flex-row justify-content-start">
-                        <img src="./assets/dadsgpt-icon.webp"
-                            alt="avatar 1" style="width: 45px; height: 100%;">
-                        <p class="small p-2 ms-3 mb-3 rounded-3 bg-body-tertiary">OK</p>
-                    </div>
-        
-                    <!-- You -->
-                    <div class="text-end">
-                        <p class="small mb-1">You</p>
-                    </div>
-                    <div class="d-flex flex-row justify-content-end mb-4 pt-1">
-                        <p class="small p-2 me-3 mb-3 rounded-3 bg-body-tertiary">Can I borrrow the car this weekend?</p>
-                    </div>
-
-                    <!-- Dad Thumb -->
-                    <div class="">
-                        <p class="small mb-1">Dad</p>
-                    </div>
-                    <div class="d-flex flex-row justify-content-start">
-                        <img src="./assets/dadsgpt-icon.webp"
-                            alt="avatar 1" style="width: 45px; height: 100%;">
-                        <p class="small p-2 ms-3 mb-3 rounded-3">
-                            <img src="./assets/thumbs-up.png" class="thumbs-up-small">
-                        </p>
-                    </div>
-
-                    <!-- You -->
-                    <div class="text-end">
-                        <p class="small mb-1">You</p>
-                    </div>
-                    <div class="d-flex flex-row justify-content-end mb-4 pt-1">
-                        <div>
-                            <p class="small p-2 me-3 mb-3 rounded-3 bg-body-tertiary">Can I borrrow the car this weekend?</p>
-                        </div>
-                    </div>
-
-                    <!-- Dad Thumb Big -->
-                    <div class="">
-                        <p class="small mb-1">Dad</p>
-                    </div>
-                    <div class="d-flex flex-row justify-content-start">
-                        <img src="./assets/dadsgpt-icon.webp"
-                            alt="avatar 1" style="width: 45px; height: 100%;">
-                        <div>
-                            <p class="small p-2 ms-3 mb-3 rounded-3">
-                                <img src="./assets/thumbs-up.png" class="thumbs-up-big">
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3">
-                  <div class="input-group mb-0">
-                    <input id="send-input" type="text" class="form-control" placeholder="Type message" aria-describedby="send-button" />
-                    <button class="btn btn-info" type="button" id="send-button" style="padding-top: .55rem;">
-                      Send
-                    </button>
-                  </div>
-                </div>
-              </div>
-      
+            <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center p-3">
+                <h5 class="mb-0">Dad's GPT</h5>
+                <button class="btn btn-sm text-end" data-bs-toggle="modal" data-bs-target="#infoModal">
+                    <i class="bi bi-info-circle fs-3"></i>
+                </button>
             </div>
-          </div>
-      
+            <div id="messages-body" class="card-body overflow-auto" style="position: relative; height: 400px">
+            </div>
+
+            <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3">
+                <div class="input-group mb-0">
+                <input id="send-input" type="text" class="form-control" placeholder="Type message" aria-describedby="send-button" />
+                <button class="btn btn-info" type="button" id="send-button" style="padding-top: .55rem;">
+                    Send
+                </button>
+                </div>
+            </div>
+            </div>
+
+            </div>
+            </div>
+          
+            <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="infoModalLabel">This is a Joke</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <b>Dad's GPT</b> is content creation tool and does not support, endorse, or take a position on any claims, beliefs, or input entered. It simply generates randomised responses.<br>
+                            Your content is your own. Your content never sent or stored in any external service, it is only ever presented on your personal device.<br>
+                            <br>
+                            By using this tool, you agree to these <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms of Service</a>.
+                            <br>
+                            <br>
+                            <b>Source</b><br>
+                            <a href="https://github.com/sleepyparadox/dadsgpt.com" target="_blank">https://github.com/sleepyparadox/dadsgpt.com</a><br>
+                            <br>
+                            <b>Credits</b><br>
+                            Don Logan - Developer<br>
+                            <br>
+                            <a href="https://www.flaticon.com/free-icon/thumbs-up_9482431" title="ok icons" target="_blank">Thumbs Up free icon created by juicy_fish - Flaticon</a><br>
+                            <i>Free for personal and commercial purpose with attribution. </i>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="termsModalLabel">Terms Of Service</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <b>1. Introduction</b>
+                            <p>Welcome to "Dad's GPT". By using this tool, you agree to these Terms of Service. Please read them carefully. If you do not agree, you must not use the tool.</p>
+                            
+                            <b>2. Description of Service</b>
+                            <p>"Dad's GPT." is a content generation tool that produces randomized responses for entertainment purposes.</p>
+                            
+                            <b>3. Disclaimer of Support and Endorsement</b>
+                            <p>The tool does not support, endorse, or take a position on any claims, beliefs, or input provided by users.</p>
+                            
+                            <b>4. User Responsibility</b>
+                            <p>All content generated using this tool is your sole responsibility. You are entirely liable for how you use or share any content created.</p>
+                            
+                            <b>5. Data Privacy</b>
+                            <p>The tool does not send, store, or transmit any input or generated content to servers or external services. All content is processed and displayed exclusively on your device.</p>
+                            
+                            <b>6. Limitation of Liability</b>
+                            <p>The creator of "Quick React Tool" is not liable for any content you generate, including but not limited to claims, damages, or legal disputes arising from the use of this tool.</p>
+                            
+                            <b>7. Right to Modify Terms</b>
+                            <p>The creator of "Quick React Tool" reserves the right to update or change these Terms of Service at any time without prior notice. Continued use of the tool after changes are made constitutes acceptance of the updated terms.</p>
+                            
+                            <b>8. Contact</b>
+                            <p>For any questions about these Terms of Service, please contact the github repository maintainer at <a href="https://github.com/sleepyparadox/dadsgpt.com" target="_blank">https://github.com/sleepyparadox/dadsgpt.com</a><br>.</p>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
       </section>
 </body>
