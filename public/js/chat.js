@@ -229,10 +229,11 @@ class MessageFactory {
 
     scrollToBottom() {
         this.messagesBody.scrollTop = this.messagesBody.scrollHeight;
+
+        // hacking fix for some animations
+        setTimeout(() => this.messagesBody.scrollTop = this.messagesBody.scrollHeight, 100);
     }
 }
-
-
 
 document.addEventListener("DOMContentLoaded", function() {
     var messagesBody = document.getElementById("messages-body")
