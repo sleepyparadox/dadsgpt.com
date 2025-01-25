@@ -1,8 +1,5 @@
-.container {
-    height: 100vh;
-}
-.card {
-    height: 90vh;
+html, body {
+    height: 100%; /* Ensure the body and html fill the viewport */
 }
 .thumbs-up-big {
     max-width: 100%;
