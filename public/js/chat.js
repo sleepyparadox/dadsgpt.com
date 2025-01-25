@@ -243,15 +243,29 @@ document.addEventListener("DOMContentLoaded", function() {
 
     window.messageFactory = messageFactory;
 
+    let lastUpdateAtSeconds = null;
+
     function sendMessage() {
         const userInput = document.getElementById('send-input');
         const message = userInput.value.trim();
         if (message) {
+
+            // Update timestamp
+            var nowSeconds = Math.floor(Date.now() / 1000);
+            var updateTimestampAfterSeconds = 300; // 5min
+
+            if (lastUpdateAtSeconds == null || (nowSeconds - lastUpdateAtSeconds) > updateTimestampAfterSeconds) {
+                var nowFormatted = new Date().toLocaleString('en-US', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit', hour12: true }).replace(',', '');
+                messageFactory.appendTimestamp(nowFormatted);
+            }
+            lastUpdateAtSeconds = nowSeconds;
+
+            // Append input
             messageFactory.appendInputMessage(message);
             userInput.value = '';
 
+            // Append result
             var delay = 2500; // play animation once
-
             setTimeout(() => {
                 var randResponsePrecent = Math.floor(Math.random() * 100);
                 if (randResponsePrecent < 5) {
