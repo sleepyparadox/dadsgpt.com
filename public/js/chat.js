@@ -24,7 +24,7 @@ class MessageFactory {
 
     appendInputMessage(text) {
         const inputDiv = document.createElement("div");
-        inputDiv.classList.add("d-flex", "flex-row", "justify-content-end", "mb-4", "pt-1")
+        inputDiv.classList.add("d-flex", "flex-row", "justify-content-end", "mb-4", "pt-1", "animate__animated", "animate__fadeInUp")
         const inputInnerText = document.createElement("p");
         inputInnerText.classList.add("small", "p-2", "me-3", "mb-1", "rounded-3", "bg-body-tertiary")
         inputInnerText.textContent = text;
@@ -33,9 +33,17 @@ class MessageFactory {
         inputDiv.appendChild(inputInnerText);
     }
 
-    appendResponseMessage(text) {
-        const dad = this.newDadName();
-        this.messagesBody.appendChild(dad);
+    appendResponseMessage(text, isTyping, divsToReplace) {
+        if(isTyping)
+        {
+            const typingDivs = this.appendTyping();
+            setTimeout(() => {
+                this.appendResponseMessage(text, false, typingDivs);
+            }, 3000);
+            return;
+        }
+
+        const dadName = this.newDadName();
 
         const inputDiv = document.createElement("div");
         inputDiv.classList.add("d-flex", "flex-row", "justify-content-start")
@@ -43,17 +51,31 @@ class MessageFactory {
         const dadImg = this.newDadImage();
 
         const inputInnerText = document.createElement("p");
-        inputInnerText.classList.add("small", "p-2", "ms-3", "me-3", "mb-1", "rounded-3", "bg-body-tertiary")
+        inputInnerText.classList.add("small", "p-2", "ms-3", "me-3", "mb-1", "rounded-3", "bg-body-tertiary", "animate__animated", "animate__fadeIn")
         inputInnerText.textContent = text;
         
-        this.messagesBody.appendChild(inputDiv);
+        if(divsToReplace != null)
+        {
+            var nextSibling = divsToReplace.at(-1);
+            this.messagesBody.insertBefore(dadName, nextSibling);
+            this.messagesBody.insertBefore(inputDiv, nextSibling);
+            for(let i = 0; i < divsToReplace.length; i++) {
+                this.messagesBody.removeChild(divsToReplace[i]);
+            }
+        }
+        else
+        {
+            this.messagesBody.appendChild(dadName);
+            this.messagesBody.appendChild(inputDiv);
+        }
+        
         inputDiv.appendChild(dadImg);
         inputDiv.appendChild(inputInnerText);
     }
 
     appendThumbSmall() {
-        const dad = this.newDadName();
-        this.messagesBody.appendChild(dad);
+        const dadName = this.newDadName();
+        this.messagesBody.appendChild(dadName);
 
         const inputDiv = document.createElement("div");
         inputDiv.classList.add("d-flex", "flex-row", "justify-content-start")
@@ -72,9 +94,10 @@ class MessageFactory {
         inputDiv.appendChild(inputInnerText);
         inputInnerText.appendChild(thumbImg);
     }
+
     appendThumbLarge() {
-        const dad = this.newDadName();
-        this.messagesBody.appendChild(dad);
+        const dadName = this.newDadName();
+        this.messagesBody.appendChild(dadName);
 
         const inputDiv = document.createElement("div");
         inputDiv.classList.add("d-flex", "flex-row", "justify-content-start")
@@ -93,12 +116,14 @@ class MessageFactory {
         inputDiv.appendChild(inputInnerText);
         inputInnerText.appendChild(thumbImg);
     }
+
     appendTyping() {
-        const dad = this.newDadName();
-        this.messagesBody.appendChild(dad);
+        const dadName = this.newDadName();
+        dadName.classList.add("animate__animated", "animate__fadeInLeft");
+        this.messagesBody.appendChild(dadName);
 
         const typingDiv = document.createElement("div");
-        typingDiv.classList.add("d-flex", "flex-row", "justify-content-start")
+        typingDiv.classList.add("d-flex", "flex-row", "justify-content-start", "animate__animated", "animate__slideInLeft")
 
         const dadImg = this.newDadImage();
 
@@ -124,6 +149,8 @@ class MessageFactory {
         dotsDiv.appendChild(dot1);
         dotsDiv.appendChild(dot2);
         dotsDiv.appendChild(dot3);
+
+        return [dadName, typingDiv];
     }
 
     newDadName() {
@@ -144,9 +171,35 @@ class MessageFactory {
     }
 }
 
+
+
 document.addEventListener("DOMContentLoaded", function() {
     var messagesBody = document.getElementById("messages-body")
     var messageFactory = new MessageFactory(messagesBody);
 
+    messageFactory.clear();
+
     window.messageFactory = messageFactory;
+
+    function sendMessage() {
+        const userInput = document.getElementById('send-input');
+        const message = userInput.value.trim();
+        if (message) {
+            messageFactory.appendInputMessage(message);
+            userInput.value = '';
+            setTimeout(() => {
+                messageFactory.appendResponseMessage("OK", true);
+            }, 500);
+        }
+    }
+
+    document.getElementById('send-input').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            sendMessage();
+        }
+    });
+    document.getElementById('send-button').addEventListener('click', function(event) {
+        sendMessage();
+    });
+
 });
